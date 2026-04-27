@@ -1,0 +1,51 @@
+import 'package:flutter/material.dart';
+import 'dart:math';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(home: GameScreen());
+  }
+}
+
+class GameScreen extends StatefulWidget {
+  @override
+  _GameScreenState createState() => _GameScreenState();
+}
+
+class _GameScreenState extends State<GameScreen> {
+  int balance = 100;
+
+  void playGame() {
+    int bet = 10;
+
+    if (balance >= bet) {
+      bool win = Random().nextBool();
+
+      setState(() {
+        balance -= bet;
+        if (win) balance += bet * 2;
+      });
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text("Mini Zoopee")),
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Balance: ₹$balance"),
+          SizedBox(height: 20),
+          ElevatedButton(
+            onPressed: playGame,
+            child: Text("Play ₹10"),
+          ),
+        ],
+      ),
+    );
+  }
+}
